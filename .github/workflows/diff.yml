@@ -1,0 +1,103 @@
+name: diff
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  diff:
+    name: DIFF
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # v2.4.2
+      - name: DIFFSTEP
+        run: |
+          echo "Running JS tests"
+          if [[ ! -f package.json ]]; then
+            echo "package.json missing"
+            exit 1
+          fi
+          if [[ ! -f .nvmrc ]]; then
+            echo "Missing .nvmrc"
+            exit 1
+          fi
+          wget https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh
+          php -r '
+            $hash = "dd4b116a7452fc3bb8c0e410ceac27e19b0ba0f900fe2f91818a95c12e92130fdfb8170fec170b9fb006d316f6386f2b";
+            if (hash_file("sha384", "install.sh") === $hash) {
+              echo "Installer verified";
+            } else {
+              echo "Installer corrupt";
+              unlink('install.sh');
+            }
+            echo PHP_EOL;
+          '
+          if [[ ! -f install.sh ]]; then
+            echo "Cannot install nvm"
+            exit 1
+          fi
+          . install.sh
+          rm install.sh
+          export NVM_DIR="$HOME/.nvm"
+          # this loads nvm into the current terminal
+          [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
+          ADMIN_NPM_VERSION=
+          if [[ -d vendor/silverstripe/admin ]]; then
+            cd vendor/silverstripe/admin
+            nvm install
+            nvm use
+            ADMIN_NPM_VERSION=$(npm -v)
+            npm install -g yarn
+            yarn install --network-concurrency 1
+            cd ../../..
+          fi
+          nvm install
+          nvm use
+          if [[ $(npm -v) != $ADMIN_NPM_VERSION ]]; then
+            npm install -g yarn;
+          fi
+          yarn install --network-concurrency 1
+          if [[ $(cat package.json | jq -r '.scripts.build') != 'null' ]]; then
+            DIST_DIR=
+            if [[ -d client/dist ]]; then
+              DIST_DIR=client/dist
+            elif [[ -d dist ]]; then
+              DIST_DIR=dist
+            else
+              echo "No dist directory found"
+              exit 1
+            fi
+            echo "Deleting $DIST_DIR"
+            rm -rf $DIST_DIR
+            echo "Running yarn build"
+            yarn run build
+            echo "Running git diff"
+            # Add all files to ensure that any new files previously uncommitted are tracked
+            git add $DIST_DIR
+            GIT_DIFF=$(git diff --cached --name-status --relative=$DIST_DIR)
+            if [[ $GIT_DIFF != "" ]]; then
+              echo "git diff found modified files when it should not have:"
+              echo $GIT_DIFF
+              mkdir artifacts
+              cp $DIST_DIR/js/bundle.js artifacts
+              exit 1
+            fi
+          fi
+          if [[ $(cat package.json | jq -r '.scripts.test') != 'null' ]]; then
+            echo "Running yarn test"
+            yarn run test
+          fi
+          if [[ $(cat package.json | jq -r '.scripts.lint') != 'null' ]]; then
+            echo "Running yarn lint"
+            yarn run lint
+          fi
+          echo "Passed"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2 # @v2.3.1
+        if: always()
+        with:
+          name: myartifacts
+          path: artifacts
+
+
