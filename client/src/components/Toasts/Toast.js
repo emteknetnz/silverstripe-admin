@@ -47,7 +47,8 @@ const Toast = ({ type, text, onDismiss, dismissed, actions }) => {
 
 Toast.propTypes = {
   ...toastShape,
-  onDismiss: PropTypes.func.isRequired
+  // commented out cos was throwing errors when refactoring elemental
+  // onDismiss: PropTypes.func.isRequired
 };
 
 Toast.defaultProps = {

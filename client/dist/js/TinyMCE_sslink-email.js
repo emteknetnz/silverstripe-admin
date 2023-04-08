@@ -1,1 +1,226 @@
-!function(){"use strict";var t={648:function(t){t.exports=Injector},595:function(t){t.exports=InsertLinkModal},363:function(t){t.exports=React},691:function(t){t.exports=ReactDomClient},196:function(t){t.exports=TinyMCEActionRegistrar},754:function(t){t.exports=i18n},311:function(t){t.exports=jQuery}},e={};function i(n){var o=e[n];if(void 0!==o)return o.exports;var r=e[n]={exports:{}};return t[n](r,r.exports,i),r.exports}!function(){var t=s(i(754)),e=s(i(196)),n=s(i(363)),o=i(691),r=s(i(311)),a=i(595),l=i(648);function s(t){return t&&t.__esModule?t:{default:t}}const d="sslinkemail";e.default.addAction("sslink",{text:t.default._t("Admin.LINKLABEL_EMAIL","Link to email address"),onclick:t=>t.execCommand(d),priority:51},editorIdentifier).addCommandWithUrlTest(d,/^mailto:/);const c={init(t){t.addCommand(d,(()=>{window.jQuery(`#${t.id}`).entwine("ss").openLinkEmailDialog()}))}},u="insert-link__dialog-wrapper--email",m=(0,l.loadComponent)((0,a.createInsertLinkModal)("SilverStripe\\Admin\\LeftAndMain","EditorEmailLink"));r.default.entwine("ss",(e=>{e("textarea.htmleditor").entwine({openLinkEmailDialog(){let t=e(`#${u}`);t.length||(t=e(`<div id="${u}" />`),e("body").append(t)),t.addClass("insert-link__dialog-wrapper"),t.setElement(this),t.open()}}),e(`#${u}`).entwine({ReactRoot:null,renderModal(e){var i=this;const r=this.getOriginalAttributes(),a=this.getElement().getEditor(),l=a.getInstance().selection,s=a.getSelection(),d="A"!==l.getNode().tagName&&""===s.trim();let c=this.getReactRoot();c||(c=(0,o.createRoot)(this[0]),this.setReactRoot(c)),c.render(n.default.createElement(m,{isOpen:e,onInsert:function(){return i.handleInsert(...arguments)},onClosed:()=>this.close(),title:t.default._t("Admin.LINK_EMAIL","Insert email link"),bodyClassName:"modal__dialog",className:"insert-link__dialog-wrapper--email",fileAttributes:r,identifier:"Admin.InsertLinkEmailModal",requireLinkText:d}))},getOriginalAttributes(){const t=this.getElement().getEditor(),i=e(t.getSelectedNode()),n=(i.attr("href")||"").split("?");let o=n[0].replace(/^mailto:/,"").split("?")[0];o.match(/.+@.+\..+/)||(o="");const r=n[1]?n[1].match(/subject=([^&]+)/):"";return{Link:o,Subject:r?decodeURIComponent(r[1]):"",Description:i.attr("title")}},buildAttributes(t){const e=this._super(t);let i="",n=e.href.replace(/^mailto:/,"").split("?")[0];return n.match(/.+@.+\..+/)||(n=""),n&&(i=`mailto:${n}`),i&&t.Subject&&(i=`${i}?subject=${encodeURIComponent(t.Subject)}`),e.href=i,delete e.target,e}})})),tinymce.PluginManager.add(d,(t=>c.init(t)))}()}();
+/******/ (function() { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "lib/Injector":
+/*!***************************!*\
+  !*** external "Injector" ***!
+  \***************************/
+/***/ (function(module) {
+
+module.exports = Injector;
+
+/***/ }),
+
+/***/ "containers/InsertLinkModal/InsertLinkModal":
+/*!**********************************!*\
+  !*** external "InsertLinkModal" ***!
+  \**********************************/
+/***/ (function(module) {
+
+module.exports = InsertLinkModal;
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+/***/ (function(module) {
+
+module.exports = React;
+
+/***/ }),
+
+/***/ "react-dom/client":
+/*!*********************************!*\
+  !*** external "ReactDomClient" ***!
+  \*********************************/
+/***/ (function(module) {
+
+module.exports = ReactDomClient;
+
+/***/ }),
+
+/***/ "lib/TinyMCEActionRegistrar":
+/*!*****************************************!*\
+  !*** external "TinyMCEActionRegistrar" ***!
+  \*****************************************/
+/***/ (function(module) {
+
+module.exports = TinyMCEActionRegistrar;
+
+/***/ }),
+
+/***/ "i18n":
+/*!***********************!*\
+  !*** external "i18n" ***!
+  \***********************/
+/***/ (function(module) {
+
+module.exports = i18n;
+
+/***/ }),
+
+/***/ "jquery":
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
+/***/ (function(module) {
+
+module.exports = jQuery;
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+!function() {
+var exports = __webpack_exports__;
+/*!***************************************************!*\
+  !*** ./client/src/legacy/TinyMCE_sslink-email.js ***!
+  \***************************************************/
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _i18n = _interopRequireDefault(__webpack_require__(/*! i18n */ "i18n"));
+var _TinyMCEActionRegistrar = _interopRequireDefault(__webpack_require__(/*! lib/TinyMCEActionRegistrar */ "lib/TinyMCEActionRegistrar"));
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "react"));
+var _client = __webpack_require__(/*! react-dom/client */ "react-dom/client");
+var _jquery = _interopRequireDefault(__webpack_require__(/*! jquery */ "jquery"));
+var _InsertLinkModal = __webpack_require__(/*! containers/InsertLinkModal/InsertLinkModal */ "containers/InsertLinkModal/InsertLinkModal");
+var _Injector = __webpack_require__(/*! lib/Injector */ "lib/Injector");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+const commandName = 'sslinkemail';
+_TinyMCEActionRegistrar.default.addAction('sslink', {
+  text: _i18n.default._t('Admin.LINKLABEL_EMAIL', 'Link to email address'),
+  onclick: editorInst => editorInst.execCommand(commandName),
+  priority: 51
+}, editorIdentifier).addCommandWithUrlTest(commandName, /^mailto:/);
+const plugin = {
+  init(editor) {
+    editor.addCommand(commandName, () => {
+      const field = window.jQuery(`#${editor.id}`).entwine('ss');
+      field.openLinkEmailDialog();
+    });
+  }
+};
+const modalId = 'insert-link__dialog-wrapper--email';
+const sectionConfigKey = 'SilverStripe\\Admin\\LeftAndMain';
+const formName = 'EditorEmailLink';
+const InsertLinkEmailModal = (0, _Injector.loadComponent)((0, _InsertLinkModal.createInsertLinkModal)(sectionConfigKey, formName));
+_jquery.default.entwine('ss', $ => {
+  $('textarea.htmleditor').entwine({
+    openLinkEmailDialog() {
+      let dialog = $(`#${modalId}`);
+      if (!dialog.length) {
+        dialog = $(`<div id="${modalId}" />`);
+        $('body').append(dialog);
+      }
+      dialog.addClass('insert-link__dialog-wrapper');
+      dialog.setElement(this);
+      dialog.open();
+    }
+  });
+  $(`#${modalId}`).entwine({
+    ReactRoot: null,
+    renderModal(isOpen) {
+      var _this = this;
+      const handleHide = () => this.close();
+      const handleInsert = function () {
+        return _this.handleInsert(...arguments);
+      };
+      const attrs = this.getOriginalAttributes();
+      const editor = this.getElement().getEditor();
+      const selection = editor.getInstance().selection;
+      const selectionContent = editor.getSelection();
+      const tagName = selection.getNode().tagName;
+      const requireLinkText = tagName !== 'A' && selectionContent.trim() === '';
+      let root = this.getReactRoot();
+      if (!root) {
+        root = (0, _client.createRoot)(this[0]);
+        this.setReactRoot(root);
+      }
+      root.render(_react.default.createElement(InsertLinkEmailModal, {
+        isOpen: isOpen,
+        onInsert: handleInsert,
+        onClosed: handleHide,
+        title: _i18n.default._t('Admin.LINK_EMAIL', 'Insert email link'),
+        bodyClassName: "modal__dialog",
+        className: "insert-link__dialog-wrapper--email",
+        fileAttributes: attrs,
+        identifier: "Admin.InsertLinkEmailModal",
+        requireLinkText: requireLinkText
+      }));
+    },
+    getOriginalAttributes() {
+      const editor = this.getElement().getEditor();
+      const node = $(editor.getSelectedNode());
+      const hrefParts = (node.attr('href') || '').split('?');
+      let email = hrefParts[0].replace(/^mailto:/, '').split('?')[0];
+      if (!email.match(/.+@.+\..+/)) {
+        email = '';
+      }
+      const subjectMatch = hrefParts[1] ? hrefParts[1].match(/subject=([^&]+)/) : '';
+      const subject = subjectMatch ? decodeURIComponent(subjectMatch[1]) : '';
+      return {
+        Link: email,
+        Subject: subject,
+        Description: node.attr('title')
+      };
+    },
+    buildAttributes(data) {
+      const attributes = this._super(data);
+      let href = '';
+      let email = attributes.href.replace(/^mailto:/, '').split('?')[0];
+      if (!email.match(/.+@.+\..+/)) {
+        email = '';
+      }
+      if (email) {
+        href = `mailto:${email}`;
+      }
+      if (href && data.Subject) {
+        href = `${href}?subject=${encodeURIComponent(data.Subject)}`;
+      }
+      attributes.href = href;
+      delete attributes.target;
+      return attributes;
+    }
+  });
+});
+tinymce.PluginManager.add(commandName, editor => plugin.init(editor));
+var _default = plugin;
+exports["default"] = _default;
+}();
+/******/ })()
+;
+//# sourceMappingURL=TinyMCE_sslink-email.js.map

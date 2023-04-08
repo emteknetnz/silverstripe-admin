@@ -45,6 +45,7 @@ const Toasts = ({ toasts, onDismiss, onPause, onResume }) => {
 
 Toasts.propTypes = {
   toasts: PropTypes.arrayOf(PropTypes.shape(Toast.propTypes)).isRequired,
+  // commented out cos was throwing errors when refactoring elemental
   onDismiss: PropTypes.func.isRequired,
   onPause: PropTypes.func.isRequired,
   onResume: PropTypes.func.isRequired,
