@@ -1,4 +1,4 @@
-@retry
+@retry @job2
 Feature: Not found
   As a site owner
   I want error messages to be displayed in the context of the admin section

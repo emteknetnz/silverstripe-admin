@@ -1,4 +1,4 @@
-@retry
+@retry @job2
 Feature: Form validation
   As a content author
   I want form validation to work in the CMS

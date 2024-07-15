@@ -1,4 +1,4 @@
-@javascript @retry
+@javascript @retry @job2
 Feature: Manage Security Permissions for Groups
   As a site administrator
   I want to control my user's security permissions in an intuitive way
